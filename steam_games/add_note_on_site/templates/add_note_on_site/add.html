@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Form</title>
+    <!-- Подключение jQuery и jQuery UI для автокомплита -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+    <form method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+
+
+<!-- Подключение jQuery (если ещё не подключен) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Подключение jQuery UI для автозаполнения -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Инициализация автозаполнения
+        $('#game-name').autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: '{% url "game-autocomplete" %}',
+                    data: {
+                        'term': request.term  // Передаём введённый текст
+                    },
+                    success: function(data) {
+                        response(data);  // Ответ от сервера
+                    }
+                });
+            },
+            minLength: 2,  // Минимальное количество символов для начала поиска
+            select: function(event, ui) {
+                // Можно сделать что-то, если пользователь выбрал игру из списка
+                $('#game-name').val(ui.item.label);  // Заполняем поле выбранным названием игры
+            }
+        });
+    });
+</script>
+
+
+</html>
