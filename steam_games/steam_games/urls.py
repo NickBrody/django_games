@@ -16,11 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-
+from django.views.generic import TemplateView
 from add_note_on_site.views import game_autocomplete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('check/', include('add_note_on_site.urls')),
+    path('', TemplateView.as_view(template_name='add_note_on_site/index.html')),
+    path('add/', include('add_note_on_site.urls')),
+    path('auth/', include('my_auth.urls')),
     path('game-autocomplete/', game_autocomplete, name='game-autocomplete'),
+    
 ]

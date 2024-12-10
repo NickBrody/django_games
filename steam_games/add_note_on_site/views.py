@@ -5,6 +5,7 @@ from django.views import View
 
 from add_note_on_site.forms import GameNoteForm
 from database.models import Game
+from my_auth.models import Profile
 from .models import GameNote
 from django.views.generic import (
     ListView,
@@ -20,8 +21,14 @@ from add_note_on_site.models import GameNote
 class GameNoteCreateView(CreateView):
     model = GameNote
     template_name = "add_note_on_site/add.html"
-    success_url = reverse_lazy("a")
+    success_url = reverse_lazy("add_note_on_site:add_note")
     form_class = GameNoteForm
+
+    def form_valid(self, form):
+        # Устанавливаем профиль текущего пользователя в поле `profile`
+        form.instance.user_profile = Profile.objects.get(user=self.request.user)
+        print(Profile.objects.get(user=self.request.user))
+        return super().form_valid(form)
 
     # def post(self, request, *args, **kwargs):
     #     form_class = self.get_form_class()

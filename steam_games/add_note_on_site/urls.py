@@ -1,7 +1,9 @@
 from django.urls import path
 from .views import GameNoteCreateView
 
+app_name = 'add_note_on_site'
+
 urlpatterns = [
     # другие пути
-    path("a/",GameNoteCreateView.as_view(), name="a"),
+    path("add_note/",GameNoteCreateView.as_view(), name="add_note"),
 ]

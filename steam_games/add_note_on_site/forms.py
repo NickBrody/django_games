@@ -3,29 +3,18 @@ from add_note_on_site.models import GameNote
 
 
 class GameNoteForm(forms.ModelForm):
-
-    # name = forms.CharField(
-    #     label="Введите название игры",
-    #     required=True,
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             "placeholder": "Введите название игры",
-    #             "class": "form-control",
-    #         }
-    #     ),
-    # )
     
     name = forms.CharField(
-            label="Введите название игры",
-            required=True,
-            widget=forms.TextInput(
-                attrs={
-                    "placeholder": "Введите название игры",
-                    "class": "form-control",
-                    "id": "game-name",  # ID для поля, который будет использован в JS
-                }
-            ),
-        )
+        label="Введите название игры*",
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Введите название игры",
+                "class": "form-control",
+                "id": "game-name",  # ID для поля, который будет использован в JS
+            }
+        ),
+    )
 
     is_finished = forms.BooleanField(
         label="Прошёл!",
@@ -55,6 +44,17 @@ class GameNoteForm(forms.ModelForm):
 
     )
 
+    optional_notes = forms.CharField(
+        label="Дополнительные заметки",
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Введите ваши заметки здесь",
+                "class": "form-control",}
+        )
+    )
+    
+
     class Meta:
         model = GameNote
-        fields = ["name", "is_finished", "want_to_play", "score", "hours"]
+        fields = ["name", "is_finished", "want_to_play", "score", "hours", "optional_notes"]

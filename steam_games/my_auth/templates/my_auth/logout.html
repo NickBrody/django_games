@@ -1,0 +1,10 @@
+<!-- my_auth/logout.html -->
+<title>Logout</title>
+
+<h1 class="h2 mx-auto">Выход</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Выйти</button>
+</form>
+
