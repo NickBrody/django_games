@@ -30,21 +30,17 @@ class GameNoteCreateView(CreateView):
         print(Profile.objects.get(user=self.request.user))
         return super().form_valid(form)
 
-    # def post(self, request, *args, **kwargs):
-    #     form_class = self.get_form_class()
 
-    #     form = self.get_form(form_class)
-    #     if form.is_valid():
-    #         form.save()
-    #         messages.success(self.request, 'Группа успешно добавлена.')
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-            
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['object_list'] = Group.objects.all()
-    #     return context
+class GameNoteListView(ListView):
+    model = GameNote
+    template_name = "add_note_on_site/list.html"
+
+    def get_queryset(self):
+        profile = Profile.objects.get(user=self.request.user)
+        # Фильтруем по Profile, а не по User
+        queryset = GameNote.objects.filter(user_profile=profile)
+        return queryset
+
 
 def game_autocomplete(request):
     if 'term' in request.GET:

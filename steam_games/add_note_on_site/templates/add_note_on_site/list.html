@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой игровой блокнот</title>
+</head>
+<body>
+    {% if object_list %}
+    {% for note in object_list %}
+    {{note.name}}
+    {{note.score}}
+    {% endfor %}
+    {% endif %}
+</body>
+</html>
