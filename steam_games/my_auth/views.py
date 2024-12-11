@@ -36,6 +36,13 @@ class RegisterView(CreateView):
         # Выводим информацию о пароле перед ошибкой
         messages.error(self.request, 'Ошибка при вводе данных. Убедитесь, что вы выполнили все требования к паролю.')
         return super().form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        # Если пользователь уже авторизован, перенаправляем на главную страницу (или любую другую)
+        if request.user.is_authenticated:
+            return redirect('add_note_on_site:add_note')  # Замените 'home' на нужный URL или имя маршрута
+        return super().dispatch(request, *args, **kwargs)
+
     
 
 class LoginView(FormView):
@@ -61,7 +68,7 @@ class LoginView(FormView):
             login(self.request, user)
             return super().form_valid(form)
         else:
-            messages.error(self.request, 'Invalid username or password')
+            messages.error(self.request, 'Неправильный логин или пароль')
             return self.form_invalid(form)
 
 
