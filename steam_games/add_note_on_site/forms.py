@@ -31,7 +31,12 @@ class GameNoteForm(forms.ModelForm):
     score = forms.IntegerField(
         label="Ваша оценка игре до 100",
         required=False,
-        widget=forms.NumberInput(),
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'min': 0,
+            'max': 100,
+            'style': 'width: 30%; height: 40px;'  # Настройка ширины и высоты
+        }),
         min_value=0,
         max_value=100
     )
@@ -39,7 +44,10 @@ class GameNoteForm(forms.ModelForm):
     hours = forms.IntegerField(
         label="Сколько часов ушло на прохождение?",
         required=False,
-        widget=forms.NumberInput(),
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'style': 'width: 30%; height: 40px;'
+        }),
         min_value=0,
 
     )

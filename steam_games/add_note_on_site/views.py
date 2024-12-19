@@ -33,12 +33,13 @@ class GameNoteCreateView(CreateView):
 
 class GameNoteListView(ListView):
     model = GameNote
-    template_name = "add_note_on_site/list.html"
+    paginate_by = 10
+    template_name = "add_note_on_site/my_notes.html"
 
     def get_queryset(self):
         profile = Profile.objects.get(user=self.request.user)
         # Фильтруем по Profile, а не по User
-        queryset = GameNote.objects.filter(user_profile=profile)
+        queryset = GameNote.objects.filter(user_profile=profile).order_by("-created_at")
         return queryset
 
 
