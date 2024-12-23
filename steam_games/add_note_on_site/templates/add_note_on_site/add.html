@@ -1,3 +1,6 @@
+{% extends "add_note_on_site/my_notes.html" %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,16 +11,66 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Подключение вашего CSS файла -->
 </head>
+
+{% block header %}
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+  <h1 class="display-4 fw-normal text-body-emphasis" style="color: #ffffff;">Мой игровой блокнот</h1>
+  <br>
+  <p class="fs-5 text-body-secondary" style="color: #ffffff;">Посмотрите на список Ваших игр: какие-то из них вы уже прошли, а какие-то только собираетесь! Что будем делать сегодня?</p>
+</div>
+{% endblock %}
+
+{% block content %}
 <body>
-    <form method="post"  enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Отправить</button>
-    </form>
+    <div class="container mt-5">
+        <div class="shadow-sm rounded mb-3 bg-white p-4">
+            <h2 class="text-center mb-4">Добавить запись о игре</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100">Отправить</button>
+            </form>
+        </div>
+    </div>
 </body>
-
-
+<style>
+    body {
+        background-image: url("{% static 'img/1.jpg' %}");
+        background-size: cover;
+        background-position: center;
+    }
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-control {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .text-center {
+        text-align: center;
+    }
+    
+</style>
 <!-- Подключение jQuery (если ещё не подключен) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -49,5 +102,5 @@
     });
 </script>
 
-
+{% endblock %}
 </html>

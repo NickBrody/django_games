@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'my_auth/register.html'
-    success_url = reverse_lazy("add_note_on_site:add_note")
+    success_url = reverse_lazy("add_note_on_site:my_notes")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -40,7 +40,7 @@ class RegisterView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         # Если пользователь уже авторизован, перенаправляем на главную страницу (или любую другую)
         if request.user.is_authenticated:
-            return redirect('add_note_on_site:add_note')  # Замените 'home' на нужный URL или имя маршрута
+            return redirect('add_note_on_site:my_notes')  # Замените 'home' на нужный URL или имя маршрута
         return super().dispatch(request, *args, **kwargs)
 
     
@@ -48,12 +48,12 @@ class RegisterView(CreateView):
 class LoginView(FormView):
     form_class = CustomLoginForm
     template_name = 'my_auth/login.html'
-    success_url = reverse_lazy("add_note_on_site:add_note")
+    success_url = reverse_lazy("add_note_on_site:my_notes")
 
     def dispatch(self, request, *args, **kwargs):
         # Если пользователь уже авторизован, перенаправляем на главную страницу (или любую другую)
         if request.user.is_authenticated:
-            return redirect('add_note_on_site:add_note')  # Замените 'home' на нужный URL или имя маршрута
+            return redirect('add_note_on_site:my_notes')  # Замените 'home' на нужный URL или имя маршрута
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
