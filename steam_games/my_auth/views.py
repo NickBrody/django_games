@@ -33,8 +33,11 @@ class RegisterView(CreateView):
         return response
     
     def form_invalid(self, form):
-        # Выводим информацию о пароле перед ошибкой
-        messages.error(self.request, 'Ошибка при вводе данных. Убедитесь, что вы выполнили все требования к паролю.')
+        print(form.errors)
+        if 'username' in form.errors:
+            messages.error(self.request, 'Этот логин уже занят. Попробуйте другой.')
+        elif 'password2' in form.errors:
+            messages.error(self.request, 'Ошибка при вводе данных. Убедитесь, что пароли совпадают и вы выполнили все требования к паролю.')
         return super().form_invalid(form)
 
     def dispatch(self, request, *args, **kwargs):

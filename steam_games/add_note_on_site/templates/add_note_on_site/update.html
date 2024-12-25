@@ -16,22 +16,21 @@
 
 {% block header %}
 <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-    <h1 class="display-4 fw-normal text-body-emphasis" style="margin-bottom: 60px;"><a href="/notes/my_notes" style="color: #ffffff;">Мой игровой блокнот</a></h1>
-    <p class="fs-5 text-body-secondary" style="color: #ffffff;">Посмотрите на список Ваших игр: какие-то из них вы уже прошли, а какие-то только собираетесь!
-         Что будем делать сегодня?</p>
-  </div>
+  <h1 class="display-4 fw-normal text-body-emphasis" style="color: #ffffff;">Мой игровой блокнот</h1>
+  <br>
+  <p class="fs-5 text-body-secondary" style="color: #ffffff;">Посмотрите на список Ваших игр: какие-то из них вы уже прошли, а какие-то только собираетесь! Что будем делать сегодня?</p>
+</div>
 {% endblock %}
 
 {% block content %}
 <body>
     <div class="container mt-5">
-        <div class="shadow-sm rounded mb-3 bg-white" style="padding: 1rem; max-width: 800px; margin: auto;">
-
-            <h2 class="text-center mb-4">Добавить запись о игре</h2>
+        <div class="shadow-sm rounded mb-3 bg-white p-4">
+            <h2 class="text-center mb-4">Отредактировать запись</h2>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary w-100" style="margin-top: 70px;">Отправить</button>
+                <button type="submit" class="btn btn-primary w-100">Отправить</button>
             </form>
         </div>
     </div>

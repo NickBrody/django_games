@@ -31,6 +31,13 @@ class GameNoteCreateView(CreateView):
         return super().form_valid(form)
 
 
+class GameNoteUpdateView(UpdateView):
+    model = GameNote
+    template_name = "add_note_on_site/update.html"
+    success_url = reverse_lazy("add_note_on_site:my_notes")
+    form_class = GameNoteForm
+
+
 class GameNoteListView(ListView):
     model = GameNote
     paginate_by = 10
@@ -39,7 +46,7 @@ class GameNoteListView(ListView):
     def get_queryset(self):
         profile = Profile.objects.get(user=self.request.user)
         # Фильтруем по Profile, а не по User
-        queryset = GameNote.objects.filter(user_profile=profile).order_by("-id")
+        queryset = GameNote.objects.filter(user_profile=profile).select_related('user_profile').order_by("-id")
         return queryset
 
 
