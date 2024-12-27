@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
     <title>Мои записи</title>
@@ -111,6 +112,15 @@
         background-position: center; /* Центрируем фон */
       }
 
+      a {
+        color: #000000;
+        text-decoration: none;
+}
+
+      a:hover {
+        color: #048a2c; /* Цвет текста при наведении */
+        text-decoration: none; /* Подчеркивание при наведении */
+}
     </style>
 
 
@@ -141,10 +151,11 @@
   </symbol>
 </svg>
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-  <div class="navbar-brand col-md-3 col-lg-12 me-0 px-3 fs-6 text-white d-flex justify-content-between">
+  <div class="navbar-brand col-md-3 col-lg-12 me-0 px-3 fs-6 text-white d-flex justify-content-between align-items-center">
     <span>Вошли как {{ request.user.username }}</span>
-    <a class="text-white" href="/my_auth/logout">Выход</a>
+    <a class="text-white ms-5" href="/auth/logout">Выход</a>
   </div>
+  
 </header>
 
 
@@ -164,11 +175,11 @@
       </nav>
     </div> -->
 
-    {% block header %}
+{% block header %}
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-      <h1 class="display-4 fw-normal text-body-emphasis" style="color: #ffffff;">Мой игровой блокнот</h1>
-      <br>
+      <h1 class="display-4 fw-normal text-body-emphasis" style="margin-bottom: 60px;"><a href="/notes/my_notes" style="color: #ffffff;">Мой игровой блокнот</a></h1>
       <p class="fs-5 text-body-secondary" style="color: #ffffff;">Посмотрите на список Ваших игр: какие-то из них вы уже прошли, а какие-то только собираетесь! Что будем делать сегодня?</p>
+      <p class="fs-5 text-body-secondary" style="color: #ffffff;">Чтобы отредактировать запись, кликните на неё</p>
     </div>
 {% endblock %}
 
@@ -176,7 +187,7 @@
 
 <!-- <br> -->
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
   <div class="shadow-sm rounded mb-3 bg-white p-4">    <!-- <h2 class="display-6 text-center mb-4">Compare plans</h2> -->
     <div class="table-responsive">
       <table class="table text-center">
@@ -194,8 +205,13 @@
         <tbody>
           {% if object_list %}
           {% for note in object_list %}
+          {% if note.is_finished == True %}
+          <tr style="background-color: rgb(135, 255, 135)">
+            {% else %}
           <tr>
-            <th scope="row" class="text-start">{{note.name}}</th>
+            {% endif %}
+            <th scope="row" class="text-start">
+              <a href="{% url 'add_note_on_site:update' pk=note.pk %}">{{note.name}}</a></th>
             {% if note.is_finished == True %}
             <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
             {% else  %}
@@ -207,16 +223,19 @@
             {% else  %}
             <td><svg class="bi" width="24" height="24"><use xlink:href=/></svg></td>
             {% endif %}
+
             {% if note.score == None %}
             <td>–</td>
             {% else  %}
             <td>{{note.score}}</td>
             {% endif %}
+
             {% if note.hours == None %}
             <td>–</td>
             {% else  %}
             <td>{{note.hours}} ч.</td>
             {% endif %}
+            
             <td>{{note.created_at | date:"d.m.Y" }}</td>
           </tr>
           <!-- <tr>

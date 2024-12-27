@@ -31,6 +31,12 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ("username", "password1", "password2")
 
+    # def clean_username(self):
+    #     username = self.cleaned_data.get('username')
+    #     if User.objects.filter(username=username).exists():
+    #         print("опасука")
+    #         raise forms.ValidationError('Такой логин уже существует!')
+    #     return username
 
 class CustomLoginForm(forms.Form):
     username = forms.CharField(

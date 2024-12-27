@@ -52,18 +52,18 @@ class GameNoteForm(forms.ModelForm):
         min_value=0,
     )
 
-    optional_notes = forms.CharField(
-        label="Дополнительные заметки",
-        required=False,
-        widget=forms.Textarea(
-            attrs={
-                "placeholder": "Введите ваши заметки здесь",
-                "class": "form-control mb-3",
-                'style': 'height: 150px; width: 100%; font-size: 16px; resize: vertical;'
-            }
-        )
-    )
+    # optional_notes = forms.CharField(
+    #     label="Дополнительные заметки",
+    #     required=False,
+    #     widget=forms.Textarea(
+    #         attrs={
+    #             "placeholder": "Введите ваши заметки здесь",
+    #             "class": "form-control mb-3",
+    #             'style': 'height: 150px; width: 100%; font-size: 16px; resize: vertical;'
+    #         }
+    #     )
+    # )
 
     class Meta:
         model = GameNote
-        fields = ["name", "is_finished", "want_to_play", "score", "hours", "optional_notes"]
+        fields = ["name", "is_finished", "want_to_play", "score", "hours"]
