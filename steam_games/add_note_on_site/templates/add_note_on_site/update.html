@@ -16,24 +16,54 @@
 
 {% block header %}
 <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-  <h1 class="display-4 fw-normal text-body-emphasis" style="color: #ffffff;">Мой игровой блокнот</h1>
-  <br>
-  <p class="fs-5 text-body-secondary" style="color: #ffffff;">Посмотрите на список Ваших игр: какие-то из них вы уже прошли, а какие-то только собираетесь! Что будем делать сегодня?</p>
-</div>
+    <h1 class="display-4 fw-normal text-body-emphasis" style="margin-bottom: 60px;"><a href="/notes/my_notes" style="color: #ffffff;">Мой игровой блокнот</a></h1>
+    <p class="fs-5 text-body-secondary" style="color: #ffffff;">Посмотрите на список Ваших игр: какие-то из них вы уже прошли, а какие-то только собираетесь!
+        Что будем делать сегодня?</p></div>
 {% endblock %}
 
 {% block content %}
 <body>
     <div class="container mt-5">
-        <div class="shadow-sm rounded mb-3 bg-white p-4">
+        <div class="shadow-sm rounded mb-3 bg-white" style="padding: 1rem; max-width: 800px; margin: auto;">
             <h2 class="text-center mb-4">Отредактировать запись</h2>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary w-100">Отправить</button>
-            </form>
+                <br>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Обновить запись</button>
+                </form>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Удалить запись
+                    </button>
+                    
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Удаление записи</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          Вы уверены, что хотите удалить запись?
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+          <form action="{% url 'add_note_on_site:delete' object.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Да</button>
+        </form>
+        </div>
+      </div>
     </div>
+  </div>
+
+</div>
+</div>
+</div>
 </body>
 <style>
     body {
@@ -102,5 +132,9 @@
     });
 </script>
 
+
+
 {% endblock %}
+
+
 </html>

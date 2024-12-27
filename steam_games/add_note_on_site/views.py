@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views import View
@@ -27,7 +27,6 @@ class GameNoteCreateView(CreateView):
     def form_valid(self, form):
         # Устанавливаем профиль текущего пользователя в поле `profile`
         form.instance.user_profile = Profile.objects.get(user=self.request.user)
-        print(Profile.objects.get(user=self.request.user))
         return super().form_valid(form)
 
 
@@ -36,6 +35,11 @@ class GameNoteUpdateView(UpdateView):
     template_name = "add_note_on_site/update.html"
     success_url = reverse_lazy("add_note_on_site:my_notes")
     form_class = GameNoteForm
+
+
+class GameNoteDeleteView(DeleteView):
+    model = GameNote
+    success_url = reverse_lazy("add_note_on_site:my_notes")
 
 
 class GameNoteListView(ListView):
