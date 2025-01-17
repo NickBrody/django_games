@@ -2,11 +2,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views import View
-
-from add_note_on_site.forms import GameNoteForm
-from database.models import Game
-from my_auth.models import Profile
-from .models import GameNote
 from django.views.generic import (
     ListView,
     DetailView,
@@ -14,8 +9,27 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-
+from rest_framework import permissions
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
 from add_note_on_site.models import GameNote
+from add_note_on_site.forms import GameNoteForm
+from database.models import Game
+from my_auth.models import Profile
+from .models import GameNote
+from .serializers import GameNoteSerializer
+
+
+class GameNoteViewSet(ModelViewSet):
+    queryset = GameNote.objects.all().order_by("-created_at")
+    serializer_class = GameNoteSerializer
+    filter_backends = [
+        SearchFilter,
+        OrderingFilter,
+    ]
+    search_fields = ["name", "score"]
+    ordering_fields = ["name", "score", "hours", "created_at"]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class GameNoteCreateView(CreateView):
